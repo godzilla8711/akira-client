@@ -1,11 +1,12 @@
 {
   "name": "akira-client",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Akira client",
   "main": "index.js",
   "scripts": {
     "server": "live-server public/",
     "build": "webpack --watch",
+    "watch": "webpack --watch",
     "build-babel": "babel src/app.js --out-file=public/scripts/app.js --presets=env,react --watch"
   },
   "repository": {
