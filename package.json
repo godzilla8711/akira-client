@@ -4,9 +4,9 @@
   "description": "Akira client",
   "main": "index.js",
   "scripts": {
-    "server": "live-server public/",
     "build": "webpack",
-    "watch": "webpack --watch",
+    "server": "webpack-dev-server",
+    "live-server": "live-server public/",
     "build-babel": "babel src/app.js --out-file=public/scripts/app.js --presets=env,react --watch"
   },
   "repository": {
@@ -28,6 +28,7 @@
     "live-server": "^1.2.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "webpack": "^3.10.0"
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.10.1"
   }
 }
