@@ -6,6 +6,7 @@ class IndecisionApp extends React.Component {
     super(props);
     this.handleReset = this.handleReset.bind(this);
     this.handleAddOption = this.handleAddOption.bind(this);
+    this.handleDeleteOption = this.handleDeleteOption.bind(this);
     this.handlePickOne = this.handlePickOne.bind(this);
     this.state = {
       items: []
@@ -19,9 +20,15 @@ class IndecisionApp extends React.Component {
       return 'The value must not already exist';
     }
 
+    this.setState(prevState => ({
+        items: prevState.items.concat(item)
+    }));
+  }
+
+  handleDeleteOption(item) {
     this.setState(prevState => {
       return {
-        items: prevState.items.concat(item)
+        items: prevState.items.filter(value => (value !== item))
       };
     });
   }
@@ -33,11 +40,21 @@ class IndecisionApp extends React.Component {
   }
 
   handleReset() {
-    this.setState(() => {
-      return {
+    this.setState(() => ({
         items: []
-      };
-    });
+    }));
+  }
+
+  componentDidMount() {
+    console.log('componentDidMount was called');
+  }
+
+  componentDidUpdate(prevState, newState) {
+    console.log('componentDidUpdate was called');
+  }
+
+  componentWillUnmount() {
+    console.log('componentWillUnmount was called');
   }
 
   render() {
@@ -48,9 +65,13 @@ class IndecisionApp extends React.Component {
 
     return (
       <div>
-        <Header title={appData.title} subtitle={appData.subtitle}/>
-        <Action onHandlePickOne={this.handlePickOne} disabled={this.state.items.length <= 0} />
-        <Options items={this.state.items} onHandleReset={this.handleReset} />
+        <Header title={appData.title}
+                subtitle={appData.subtitle}/>
+        <Action onHandlePickOne={this.handlePickOne}
+                disabled={this.state.items.length <= 0} />
+        <Options items={this.state.items}
+                 onHandleReset={this.handleReset}
+                 onHandleDeleteOption={this.handleDeleteOption} />
         <AddOption onHandleAddOption={this.handleAddOption} />
       </div>
     );
@@ -80,11 +101,15 @@ class Options extends React.Component {
   render() {
     return (
       <div>
-        <p>Options Component</p>
         <button onClick={this.props.onHandleReset}>Reset All</button>
+        {this.props.items.length === 0 && <p>No Items Exist</p>}
         {
           this.props.items.map(item => {
-            return <Option key={item} item={item}/>
+            return (
+              <Option key={item}
+                      item={item}
+                      onHandleDeleteOption={this.props.onHandleDeleteOption} />
+            );
           })
         }
       </div>
@@ -97,6 +122,10 @@ class Option extends React.Component {
     return (
       <div>
         {this.props.item}
+        <button onClick={(e) => {
+          return this.props.onHandleDeleteOption(this.props.item)}}>
+          Remove
+        </button>
       </div>
     );
   }
@@ -116,11 +145,13 @@ class AddOption extends React.Component {
     const value = e.target.elements.AddOptionText.value.trim();
 
     const error = this.props.onHandleAddOption(value);
-    this.setState(() => {
-      return {
+    this.setState(() => ({
         error
-      };
-    });
+    }));
+
+    if (!error) {
+      e.target.elements.AddOptionText.value = '';
+    }
   }
 
   render() {
