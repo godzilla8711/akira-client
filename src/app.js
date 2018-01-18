@@ -1,9 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import 'materialize-css/dist/css/materialize.min.css';
 
 import IndecisionApp from './components/IndecisionApp';
+import AkiraApp from './components/AkiraApp';
 
-ReactDOM.render(<IndecisionApp />, document.getElementById('app'));
+ReactDOM.render(<AkiraApp />, document.getElementById('app'));
 
 // const test = {
 //   name: 'Tom',
