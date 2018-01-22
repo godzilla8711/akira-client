@@ -7,7 +7,7 @@ class Header extends React.Component {
       <div>
         <nav>
           <div className="grey darken-3 nav-wrapper">
-            <a href="#" className="brand-logo">Akira GPS Project</a>
+            <span style={{paddingLeft: 10}}><a href="#!" className="left brand-logo">Akira GPS Project</a></span>
             <ul id="nav-mobile" className="right hide-on-med-and-down">
               <li><a href="tbd.html">Login with Google</a></li>
               <li><a href="tbd.html">About</a></li>
